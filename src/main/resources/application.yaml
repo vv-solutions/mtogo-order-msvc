@@ -1,0 +1,27 @@
+quarkus:
+  smallrye-openapi:
+    info-title: order-svc
+    auto-add-security-requirement: false
+
+  swagger-ui:
+    always-include: true
+    path: /swagger
+
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      # Is set to one as we only have 15 connections available in the database
+      initial-size: 1
+      min-size: 1
+      url: ${MTOGO_DB_BASE_URL}/order_svc_db?currentSchema=order
+    username: ${MTOGO_DB_USERNAME}
+    password: ${MTOGO_DB_PASSWORD}
+
+    transaction-manager:
+      default-transaction-timeout: 300s
+  hibernate-orm:
+    database:
+      generation: update
+
+
+
