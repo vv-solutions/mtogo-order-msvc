@@ -7,9 +7,9 @@ env:
   GAR_LOCATION: europe-central2
   GKE_CLUSTER: vv-cluster-1
   GKE_ZONE: europe-central2-a
-  DEPLOYMENT_NAME: mtogo-product-msvc
+  DEPLOYMENT_NAME: mtogo-order-msvc
   REPO: quarkus
-  IMAGE: mtogo-product-msvc
+  IMAGE: mtogo-order-msvc
 
 jobs:
   setup-build-publish-deploy:
