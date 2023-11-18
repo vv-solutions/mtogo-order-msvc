@@ -45,7 +45,7 @@ public class DomainResource {
 
         this.productService = productService;
     }
-    
+
 
     @POST
     @ResponseStatus(201)
