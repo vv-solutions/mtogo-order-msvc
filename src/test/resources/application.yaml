@@ -16,5 +16,13 @@ quarkus:
     out-of-order: true
     create-schemas: false
 
+  rabbitmqclient:
+    virtual-host: /
+    username: guest
+    password: guest
+    hostname: localhost
+    port: 5672
+    tls:
+      enabled: false
 
 
