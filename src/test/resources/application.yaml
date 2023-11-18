@@ -22,6 +22,7 @@ quarkus:
     password: guest
     hostname: localhost
     port: 5672
+    enabled: false
     tls:
       enabled: false
 
