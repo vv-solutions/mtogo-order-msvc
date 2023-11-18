@@ -1,6 +1,6 @@
 package dk.vv.mtogo.order.msvc.pojos;
 
-import io.cucumber.java.an.E;
+import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -22,11 +22,11 @@ public class OrderLine {
     @Column(name = "product_id")
     private int productId;
 
-    @Column(name = "unit_gross_price")
-    private BigDecimal unitGrossPrice;
-
     @Column(name = "unit_net_price")
     private BigDecimal unitNetPrice;
+
+    @Column(name = "unit_gross_price")
+    private BigDecimal unitGrossPrice;
 
     @Column(name = "quantity")
     private int quantity;
@@ -40,28 +40,36 @@ public class OrderLine {
 
     // ===== Constructors =====
 
+    public OrderLine(OrderLineDTO orderLineDTO) throws Exception {
+        this.productId = orderLineDTO.getProductId();
+        this.quantity = orderLineDTO.getQuantity();
+    }
+
+    public OrderLine() {
+    }
+
     // ===== Methods =====
 
     public void createLineSubTotal() throws Exception{
-
-        if(this.unitGrossPrice.compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("Unit gross price must be zero or greater");
-        }else if (this.quantity < 0){
-            throw new IllegalArgumentException("Quantity must be zero or greater");
-        }
-
-        this.subTotal = this.unitGrossPrice.multiply(BigDecimal.valueOf(this.quantity)).setScale(2,RoundingMode.HALF_UP);
-
-    }
-
-    public void createLineTotal() throws Exception{
 
         if(this.unitNetPrice.compareTo(BigDecimal.ZERO) < 0){
             throw new IllegalArgumentException("Unit net price must be zero or greater");
         }else if (this.quantity < 0){
             throw new IllegalArgumentException("Quantity must be zero or greater");
         }
-        this.total = this.unitNetPrice.multiply(BigDecimal.valueOf(this.quantity)).setScale(2, RoundingMode.HALF_UP);
+
+        this.subTotal = this.unitNetPrice.multiply(BigDecimal.valueOf(this.quantity)).setScale(2,RoundingMode.HALF_UP);
+
+    }
+
+    public void createLineTotal() throws Exception{
+
+        if(this.unitGrossPrice.compareTo(BigDecimal.ZERO) < 0){
+            throw new IllegalArgumentException("Unit gross price must be zero or greater");
+        }else if (this.quantity < 0){
+            throw new IllegalArgumentException("Quantity must be zero or greater");
+        }
+        this.total = this.unitGrossPrice.multiply(BigDecimal.valueOf(this.quantity)).setScale(2, RoundingMode.HALF_UP);
     }
 
     // ===== Geters and Setter =====
@@ -90,20 +98,20 @@ public class OrderLine {
         this.productId = productId;
     }
 
-    public BigDecimal getUnitGrossPrice() {
-        return unitGrossPrice;
-    }
-
-    public void setUnitGrossPrice(BigDecimal unitGrossPrice) {
-        this.unitGrossPrice = unitGrossPrice;
-    }
-
     public BigDecimal getUnitNetPrice() {
         return unitNetPrice;
     }
 
-    public void setUnitNetPrice(BigDecimal unitNetPrice) {
-        this.unitNetPrice = unitNetPrice;
+    public void setUnitNetPrice(BigDecimal unitGrossPrice) {
+        this.unitNetPrice = unitGrossPrice;
+    }
+
+    public BigDecimal getUnitGrossPrice() {
+        return unitGrossPrice;
+    }
+
+    public void setUnitGrossPrice(BigDecimal unitNetPrice) {
+        this.unitGrossPrice = unitNetPrice;
     }
 
     public int getQuantity() {

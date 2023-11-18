@@ -1,15 +1,18 @@
 package dk.vv.mtogo.order.msvc.pojos;
 
+import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
+import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "\"order\"")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @Column(name = "order_lines")
-    private Set<OrderLine> orderLines;
+    private Set<OrderLine> orderLines = new HashSet<>();
 
     @Column(name = "status_id")
     private int statusId;
@@ -54,22 +57,37 @@ public class Order {
 
     }
 
-    // ===== Methods =====
+    public Order(OrderDTO orderDTO) throws Exception {
+        this.customerId = orderDTO.getCustomerId();
+        this.comment = orderDTO.getComment();
 
-    //firstBigDecimal.compareTo(secondBigDecimal) < 0 // "<"
-    //firstBigDecimal.compareTo(secondBigDecimal) > 0 // ">"
-    //firstBigDecimal.compareTo(secondBigDecimal) == 0 // "=="
-    //firstBigDecimal.compareTo(secondBigDecimal) >= 0 // ">="
+        this.addressId = orderDTO.getAddressId();
+        this.supplierId = orderDTO.getSupplierId();
+
+        if(!orderDTO.getOrderLines().isEmpty()){
+            for (OrderLineDTO orderLineDTO : orderDTO.getOrderLines()) {
+                OrderLine orderLine = new OrderLine(orderLineDTO);
+                orderLine.setOrder(this);
+                this.orderLines.add(orderLine);
+            }
+        }
+    }
+
+    // ===== Methods =====
     public BigDecimal createFee() {
+        // 6% fee
         if (this.getTotal().compareTo(BigDecimal.valueOf(101)) < 0 && this.getTotal().compareTo(BigDecimal.valueOf(75)) >= 0) {
             return this.subTotal.multiply(BigDecimal.valueOf(0.06)).setScale(2, RoundingMode.HALF_UP);
         }
+        // 5% fee
         if (this.getTotal().compareTo(BigDecimal.valueOf(100.99)) >= 0 && this.total.compareTo(BigDecimal.valueOf(501)) < 0) {
             return this.subTotal.multiply(BigDecimal.valueOf(0.05)).setScale(2, RoundingMode.HALF_UP);
         }
+        // 4% fee
         if (this.getTotal().compareTo(BigDecimal.valueOf(500.99)) > 0 && this.total.compareTo(BigDecimal.valueOf(1000.01)) < 0){
             return this.subTotal.multiply(BigDecimal.valueOf(0.04)).setScale(2, RoundingMode.HALF_UP);
         }
+        // 3% fee
         if(this.getTotal().compareTo(BigDecimal.valueOf(1000)) > 0 ){
             return this.subTotal.multiply(BigDecimal.valueOf(0.03)).setScale(2, RoundingMode.HALF_UP);
         }
@@ -183,6 +201,14 @@ public class Order {
 
     public void setCreateStamp(LocalDateTime createStamp) {
         this.createStamp = createStamp;
+    }
+
+    public void addOrderLine(OrderLine orderLine){
+        this.orderLines.add(orderLine);
+
+        if(orderLine.getOrder() != this){
+            orderLine.setOrder(this);
+        }
     }
 
 

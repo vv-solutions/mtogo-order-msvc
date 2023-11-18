@@ -1,4 +1,8 @@
+
+
 quarkus:
+  http:
+    port: 8085
   smallrye-openapi:
     info-title: order-svc
     auto-add-security-requirement: false
@@ -6,6 +10,7 @@ quarkus:
   swagger-ui:
     always-include: true
     path: /swagger
+
 
   datasource:
     db-kind: postgresql
@@ -23,5 +28,36 @@ quarkus:
     database:
       generation: update
 
+  rabbitmqclient:
+    virtual-host: ${MTOGO_RABBITMQ_VHOST}
+    username: ${MTOGO_RABBITMQ_USERNAME}
+    password: ${MTOGO_RABBITMQ_PASSWORD}
+    hostname: ${MTOGO_RABBITMQ_HOST}
+    port: ${MTOGO_RABBITMQ_PORT}
+    tls:
+      enabled: false
+  rest-client:
+    product-api:
+      url: ${MTOGO_PRODUCT_SERVICE_URL}
 
+order:
+  msvc:
+
+    queues:
+      orderCreation:
+        exchange: order.creation.fx
+
+      orderStatus:
+        queue: order.status.q
+        exchange: order.status.dx
+
+"%dev":
+  quarkus:
+    log:
+      level: INFO
+      category:
+        "org.apa.cam.com.fil.rem.SftpOperations": ERROR
+
+      console:
+        json: false
 
