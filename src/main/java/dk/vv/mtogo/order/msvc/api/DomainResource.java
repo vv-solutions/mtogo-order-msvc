@@ -9,19 +9,23 @@ import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
 import dk.vv.mtogo.order.msvc.dtos.ProductDTO;
 import dk.vv.mtogo.order.msvc.facades.OrderFacade;
 import dk.vv.mtogo.order.msvc.message.MessageService;
-import dk.vv.mtogo.order.msvc.pojos.Order;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static dk.vv.mtogo.order.msvc.api.ExamplePayloads.*;
 
 @Path("/api/order")
 @Produces("application/json")
@@ -50,6 +54,28 @@ public class DomainResource {
     @POST
     @ResponseStatus(201)
     @Transactional
+    @Operation(summary = "Place order", description = "Persists order and sends order creation event, returns the created order")
+    @RequestBody(
+            required = true,
+            content = @Content(
+                    schema = @Schema(implementation = OrderDTO.class, required = true, requiredProperties = {"productName", "description", "grossPrice", "supplierId"}),
+                    examples = @ExampleObject(
+                            name = "Order",
+                            value = NEW_ORDER,
+                            summary = "Order",
+                            description = "Order"
+                    )
+            ))
+    @APIResponse(
+            content = @Content(
+                    schema = @Schema(implementation = OrderDTO.class),
+                    examples = @ExampleObject(
+                            name = "Order",
+                            value = CREATED_ORDER,
+                            summary = "Order",
+                            description = "Order"
+                    )
+            ))
     public OrderDTO placeOrder(OrderDTO orderDTO) throws Exception {
 
         // calculate prices
@@ -97,20 +123,21 @@ public class DomainResource {
     @GET
     @ResponseStatus(200)
     @Transactional
+    @Operation(summary = "Get orders", description = "Returns a list of all orders")
+    @APIResponse(
+            content = @Content(
+                    schema = @Schema(implementation = OrderDTO.class),
+                    examples = @ExampleObject(
+                            name = "Order",
+                            value = LIST_OF_ORDERS,
+                            summary = "Order",
+                            description = "Order"
+                    )
+    ))
     public List<OrderDTO> getAllOrders() {
         return orderFacade.getAllOrders();
     }
 
-
-    @POST
-    @Path("/test")
-    public String test() throws JsonProcessingException {
-        Response response = productService.getProducts(List.of(1,101));
-
-        System.out.println(response.readEntity(String.class));
-
-        return "ok";
-    }
 
 
 }

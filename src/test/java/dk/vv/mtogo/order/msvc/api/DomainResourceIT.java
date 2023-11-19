@@ -1,23 +1,15 @@
 package dk.vv.mtogo.order.msvc.api;
 
-import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
-import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
-import dk.vv.mtogo.order.msvc.message.MessageServiceImpl;
-import dk.vv.mtogo.order.msvc.message.MessageServiceMock;
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.Mock;
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
+import dk.vv.common.data.transfer.objects.order.OrderLineDTO;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.MockitoConfig;
 import io.restassured.http.ContentType;
-import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-
 import java.math.BigDecimal;
 import java.util.List;
 

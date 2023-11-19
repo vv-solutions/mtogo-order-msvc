@@ -1,6 +1,6 @@
 package dk.vv.mtogo.order.msvc.pojos;
 
-import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
+import dk.vv.common.data.transfer.objects.order.OrderLineDTO;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -49,6 +49,18 @@ public class OrderLine {
     }
 
     // ===== Methods =====
+
+    public OrderLineDTO toDTO() {
+        OrderLineDTO orderLineDTO = new OrderLineDTO();
+        orderLineDTO.setId(this.getId());
+        orderLineDTO.setProductId(this.getProductId());
+        orderLineDTO.setUnitNetPrice(this.getUnitNetPrice());
+        orderLineDTO.setUnitGrossPrice(this.getUnitGrossPrice());
+        orderLineDTO.setQuantity(this.getQuantity());
+        orderLineDTO.setTotal(this.getTotal());
+        orderLineDTO.setSubTotal(this.getSubTotal());
+        return orderLineDTO;
+    }
 
     public void createLineSubTotal() throws Exception{
 

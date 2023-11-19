@@ -1,7 +1,7 @@
 package dk.vv.mtogo.order.msvc.pojos;
 
-import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
-import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
+import dk.vv.common.data.transfer.objects.order.OrderLineDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -74,6 +74,28 @@ public class Order {
     }
 
     // ===== Methods =====
+
+    public OrderDTO toDTO() {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setId(this.getId());
+        orderDTO.setCustomerId(this.getCustomerId());
+        orderDTO.setComment(this.getComment());
+        orderDTO.setStatusId(this.getStatusId());
+        orderDTO.setSubTotal(this.getSubTotal());
+        orderDTO.setTotal(this.getTotal());
+        orderDTO.setAddressId(this.getAddressId());
+        orderDTO.setSupplierId(this.getSupplierId());
+
+        if(!this.getOrderLines().isEmpty()){
+            for (OrderLine orderLine : this.getOrderLines()) {
+                orderDTO.addOrderLine(orderLine.toDTO());
+            }
+        }
+        return orderDTO;
+    }
+
+
+
     public BigDecimal createFee() {
         // 6% fee
         if (this.getTotal().compareTo(BigDecimal.valueOf(101)) < 0 && this.getTotal().compareTo(BigDecimal.valueOf(75)) >= 0) {

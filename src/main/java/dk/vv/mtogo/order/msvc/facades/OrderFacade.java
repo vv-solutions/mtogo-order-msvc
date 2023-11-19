@@ -1,7 +1,7 @@
 package dk.vv.mtogo.order.msvc.facades;
 
-import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
-import dk.vv.mtogo.order.msvc.dtos.ProductDTO;
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
+import dk.vv.common.data.transfer.objects.product.ProductDTO;
 import dk.vv.mtogo.order.msvc.enums.OrderStatus;
 import dk.vv.mtogo.order.msvc.pojos.Order;
 import dk.vv.mtogo.order.msvc.pojos.OrderLine;
@@ -20,7 +20,7 @@ public class OrderFacade {
 
 
     public List<OrderDTO> getAllOrders(){
-        return orderRepository.findAll().list().stream().map(OrderDTO::new).collect(Collectors.toList());
+        return orderRepository.findAll().list().stream().map(Order::toDTO).collect(Collectors.toList());
     }
 
 
@@ -50,7 +50,7 @@ public class OrderFacade {
         // save order
         orderRepository.persist(order);
 
-        return new OrderDTO(order);
+        return order.toDTO();
     }
 
     public void handleStatusUpdate(OrderDTO orderDTO){
