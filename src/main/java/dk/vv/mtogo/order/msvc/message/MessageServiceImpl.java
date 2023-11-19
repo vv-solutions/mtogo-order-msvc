@@ -2,8 +2,8 @@ package dk.vv.mtogo.order.msvc.message;//package dk.vv.mtogo.order.msvc.message;
 //
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
 import dk.vv.mtogo.order.msvc.Configuration;
-import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
 import dk.vv.mtogo.order.msvc.facades.OrderFacade;
 import io.quarkiverse.rabbitmqclient.RabbitMQClient;
 import io.quarkus.arc.profile.UnlessBuildProfile;
