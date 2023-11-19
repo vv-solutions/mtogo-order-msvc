@@ -6,6 +6,7 @@ import dk.vv.mtogo.order.msvc.Configuration;
 import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
 import dk.vv.mtogo.order.msvc.facades.OrderFacade;
 import io.quarkiverse.rabbitmqclient.RabbitMQClient;
+import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -17,6 +18,7 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 
 @ApplicationScoped
+@UnlessBuildProfile("test")
 public class MessageServiceImpl implements MessageService {
 
     @Inject
