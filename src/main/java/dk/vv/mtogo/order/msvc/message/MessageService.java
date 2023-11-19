@@ -2,6 +2,7 @@ package dk.vv.mtogo.order.msvc.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
 import dk.vv.mtogo.order.msvc.Configuration;
 import dk.vv.mtogo.order.msvc.facades.OrderFacade;
 import io.quarkiverse.rabbitmqclient.RabbitMQClient;
@@ -16,6 +17,6 @@ public interface MessageService {
     void setupQueues();
     void listenOnOrderStatusQueue();
 
-    void sendOrderCreationMessage(Object o);
+    void sendOrderCreationMessage(OrderDTO o);
 
 }

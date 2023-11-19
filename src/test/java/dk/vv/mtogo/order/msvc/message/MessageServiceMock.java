@@ -1,5 +1,6 @@
 package dk.vv.mtogo.order.msvc.message;
 
+import dk.vv.common.data.transfer.objects.order.OrderDTO;
 import io.quarkiverse.rabbitmqclient.RabbitMQClient;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.test.Mock;
@@ -23,6 +24,6 @@ public class MessageServiceMock implements MessageService {
     }
 
     @Override
-    public void sendOrderCreationMessage(Object o) {
+    public void sendOrderCreationMessage(OrderDTO o) {
     }
 }

@@ -79,8 +79,12 @@ public class MessageServiceImpl implements MessageService {
                 @Override
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
 
+                    var order = mapper.readValue(body, OrderDTO.class);
+
+                    logger.infof("status: received information about order [%d] with status [%s]",order.getId(),order.getStatusId());
+
                     // update order status
-                    orderFacade.handleStatusUpdate(mapper.readValue(body, OrderDTO.class));
+                    orderFacade.handleStatusUpdate(order);
                 }
             });
         } catch (IOException e) {
@@ -89,11 +93,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void sendOrderCreationMessage(Object o) {
+    public void sendOrderCreationMessage(OrderDTO o) {
         try {
             // send a message to the exchange
 
             String message = mapper.writeValueAsString(o);
+
+            logger.infof("order creation: Sent order creation message for order: [%d]",o.getId());
 
             channel.basicPublish(configuration.queues().orderCreation().exchange(), "#", null, message.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {

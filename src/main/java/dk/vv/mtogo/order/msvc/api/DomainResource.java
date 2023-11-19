@@ -1,7 +1,6 @@
 package dk.vv.mtogo.order.msvc.api;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.vv.common.data.transfer.objects.order.OrderDTO;
@@ -21,6 +20,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.List;
@@ -42,12 +42,15 @@ public class DomainResource {
 
     private final ProductService productService;
 
+    private final Logger logger;
+
     @Inject
-    public DomainResource(OrderFacade orderFacade, MessageService messageService, @RestClient ProductService productService) {
+    public DomainResource(OrderFacade orderFacade, MessageService messageService, @RestClient ProductService productService, Logger logger) {
         this.orderFacade = orderFacade;
         this.messageService = messageService;
 
         this.productService = productService;
+        this.logger = logger;
     }
 
 
@@ -77,6 +80,7 @@ public class DomainResource {
                     )
             ))
     public OrderDTO placeOrder(OrderDTO orderDTO) throws Exception {
+        logger.infof("order creation: received information about new order with body: %s", mapper.writeValueAsString(orderDTO));
 
         // calculate prices
         List<Integer> productIds = orderDTO.getOrderLines().stream().map(OrderLineDTO::getProductId).toList();
