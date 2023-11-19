@@ -16,14 +16,12 @@ quarkus:
     out-of-order: true
     create-schemas: false
 
-  rabbitmqclient:
-    virtual-host: /
-    username: guest
-    password: guest
-    hostname: localhost
-    port: 5672
-    enabled: false
-    tls:
-      enabled: false
 
 
+  rabbitmq:
+    devservices:
+      image-name: rabbitmq:latest
+      port: 5672
+      username: guest
+      password: guest
+      host: 127.0.0.1

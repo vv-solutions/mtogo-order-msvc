@@ -21,8 +21,6 @@ public class Producers {
     @Inject
     Configuration configuration;
 
-    @Inject
-    RabbitMQClient rabbitMQClient;
 
     @Produces
     public OrderFacade getOrderFacade(OrderRepository repository){

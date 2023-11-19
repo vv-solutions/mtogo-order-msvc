@@ -1,5 +1,6 @@
 package dk.vv.mtogo.order.msvc.message;
 
+import io.quarkiverse.rabbitmqclient.RabbitMQClient;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.test.Mock;
 import jakarta.enterprise.context.ApplicationScoped;

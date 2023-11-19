@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 @ApplicationScoped
 public class MessageServiceImpl implements MessageService {
 
+    @Inject
     private  Logger logger;
 
     @Inject

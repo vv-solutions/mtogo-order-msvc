@@ -1,5 +1,3 @@
-
-
 quarkus:
   http:
     port: 8085
@@ -42,7 +40,6 @@ quarkus:
 
 order:
   msvc:
-
     queues:
       orderCreation:
         exchange: order.creation.fx
@@ -60,4 +57,3 @@ order:
 
       console:
         json: false
-

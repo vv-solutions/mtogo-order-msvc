@@ -11,6 +11,7 @@ import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
 
 public interface MessageService {
+
     void onApplicationStart(@Observes StartupEvent event);
     void setupQueues();
     void listenOnOrderStatusQueue();

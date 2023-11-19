@@ -3,8 +3,13 @@ package dk.vv.mtogo.order.msvc.api;
 import dk.vv.mtogo.order.msvc.dtos.OrderDTO;
 import dk.vv.mtogo.order.msvc.dtos.OrderLineDTO;
 import dk.vv.mtogo.order.msvc.message.MessageServiceImpl;
+import dk.vv.mtogo.order.msvc.message.MessageServiceMock;
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.MockitoConfig;
 import io.restassured.http.ContentType;
+import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
@@ -33,6 +38,7 @@ public class DomainResourceIT {
     public void restoreDatabase() {
         flyway.clean();
     }
+
 
 
     @Test
