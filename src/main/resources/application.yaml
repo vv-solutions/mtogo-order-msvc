@@ -26,14 +26,6 @@ quarkus:
     database:
       generation: update
 
-  rabbitmqclient:
-    virtual-host: ${MTOGO_RABBITMQ_VHOST}
-    username: ${MTOGO_RABBITMQ_USERNAME}
-    password: ${MTOGO_RABBITMQ_PASSWORD}
-    hostname: ${MTOGO_RABBITMQ_HOST}
-    port: ${MTOGO_RABBITMQ_PORT}
-    tls:
-      enabled: false
   rest-client:
     product-api:
       url: ${MTOGO_PRODUCT_SERVICE_URL}
@@ -57,3 +49,22 @@ order:
 
       console:
         json: false
+    rabbitmqclient:
+      virtual-host: ${MTOGO_RABBITMQ_VHOST}
+      username: ${MTOGO_RABBITMQ_USERNAME}
+      password: ${MTOGO_RABBITMQ_PASSWORD}
+      hostname: ${MTOGO_RABBITMQ_HOST}
+      port: ${MTOGO_RABBITMQ_PORT}
+      tls:
+        enabled: false
+
+"%prod":
+  quarkus:
+    rabbitmqclient:
+      virtual-host: ${MTOGO_RABBITMQ_VHOST}
+      username: ${MTOGO_RABBITMQ_USERNAME}
+      password: ${MTOGO_RABBITMQ_PASSWORD}
+      hostname: ${MTOGO_RABBITMQ_HOST}
+      port: ${MTOGO_RABBITMQ_PORT}
+      tls:
+        enabled: false
