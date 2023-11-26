@@ -22,11 +22,6 @@ public class Producers {
     Configuration configuration;
 
 
-    @Produces
-    public OrderFacade getOrderFacade(OrderRepository repository){
-        return new OrderFacade(repository);
-    }
-
 
 //    @Produces
 //    public MessageService getMessageService(Logger logger){

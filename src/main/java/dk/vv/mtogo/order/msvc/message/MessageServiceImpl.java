@@ -21,10 +21,8 @@ import java.nio.charset.StandardCharsets;
 @UnlessBuildProfile("test")
 public class MessageServiceImpl implements MessageService {
 
-    @Inject
     private  Logger logger;
 
-    @Inject
     private  RabbitMQClient rabbitMQClient;
 
 
@@ -37,6 +35,7 @@ public class MessageServiceImpl implements MessageService {
     private ObjectMapper mapper = new ObjectMapper();
 
 
+    @Inject
     public MessageServiceImpl(Logger logger, RabbitMQClient rabbitMQClient, Configuration configuration, OrderFacade orderFacade) {
         this.logger = logger;
         this.rabbitMQClient = rabbitMQClient;
@@ -81,10 +80,12 @@ public class MessageServiceImpl implements MessageService {
 
                     var order = mapper.readValue(body, OrderDTO.class);
 
-                    logger.infof("status: received information about order [%d] with status [%s]",order.getId(),order.getStatusId());
+                    logger.infof("status: received information about order [%d]",order.getId());
 
                     // update order status
-                    orderFacade.handleStatusUpdate(order);
+                    orderFacade.handleStatusUpdate(order.getId(),order.getStatusId());
+
+                    logger.infof("status: updated order [%d] with status [%s]",order.getId(),order.getStatusId());
                 }
             });
         } catch (IOException e) {

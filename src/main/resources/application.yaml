@@ -11,10 +11,11 @@ quarkus:
   datasource:
     db-kind: postgresql
     jdbc:
-      # Is set to one as we only have 15 connections available in the database
+      # Is set to 5 as we have 112 connections in total
       initial-size: 1
       min-size: 1
-      url: ${MTOGO_DB_BASE_URL}/order_svc_db?currentSchema=order
+      max-size: 5
+      url: ${MTOGO_DB_BASE_URL}/order_svc_db
     username: ${MTOGO_DB_USERNAME}
     password: ${MTOGO_DB_PASSWORD}
 
@@ -55,7 +56,9 @@ order:
       port: ${MTOGO_RABBITMQ_PORT}
       tls:
         enabled: false
-
+    hibernate-orm:
+      database:
+        default-schema: "\"order\""
 "%prod":
   quarkus:
     rabbitmqclient:
@@ -66,3 +69,6 @@ order:
       port: ${MTOGO_RABBITMQ_PORT}
       tls:
         enabled: false
+    hibernate-orm:
+      database:
+        default-schema: "\"order\""

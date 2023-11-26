@@ -53,8 +53,9 @@ public class OrderFacade {
         return order.toDTO();
     }
 
-    public void handleStatusUpdate(OrderDTO orderDTO){
-        orderRepository.update("statusId = ?1 where id= ?2",orderDTO.getStatusId(),orderDTO.getId());
+    @Transactional
+    public void handleStatusUpdate(int id, int status){
+        orderRepository.update("statusId = ?1 where id= ?2",status,id);
     }
 
 

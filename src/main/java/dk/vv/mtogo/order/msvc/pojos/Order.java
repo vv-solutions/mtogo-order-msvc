@@ -26,7 +26,6 @@ public class Order {
     private String comment;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @Column(name = "order_lines")
     private Set<OrderLine> orderLines = new HashSet<>();
 
     @Column(name = "status_id")
