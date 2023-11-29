@@ -87,4 +87,13 @@ public class OrderFacadeIT {
 
     }
 
+    @Test
+    void when_get_by_id_5_total_should_be_22_point_00(){
+        //Act
+        var order = orderFacade.getOrderById(5);
+
+        //Assert
+        Assertions.assertEquals(BigDecimal.valueOf(22).setScale(2),order.getTotal());
+    }
+
 }

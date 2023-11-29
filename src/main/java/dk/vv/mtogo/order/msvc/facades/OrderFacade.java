@@ -61,5 +61,9 @@ public class OrderFacade {
         orderRepository.update("statusId = ?1 where id= ?2",status,id);
     }
 
+    public OrderDTO getOrderById(int id){
+        return orderRepository.findById((long) id).toDTO();
+    }
+
 
 }

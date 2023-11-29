@@ -101,4 +101,18 @@ public class DomainResourceIT {
 
     }
 
+    @Test
+    void when_getting_order_3_status_code_should_be_200(){
+        // ACT
+        given()
+                .when()
+                .get("/api/order/"+3)
+                .then()
+
+                // Assert
+                .assertThat()
+                .statusCode(200);
+
+    }
+
 }

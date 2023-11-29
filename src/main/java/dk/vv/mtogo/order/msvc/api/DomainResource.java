@@ -142,6 +142,22 @@ public class DomainResource {
         return orderFacade.getAllOrders();
     }
 
-
-
+    @GET
+    @ResponseStatus(200)
+    @Transactional
+    @Path("/{orderId}")
+    @Operation(summary = "Get order by id", description = "Returns order by id")
+    @APIResponse(
+            content = @Content(
+                    schema = @Schema(implementation = OrderDTO.class),
+                    examples = @ExampleObject(
+                            name = "Order",
+                            value = CREATED_ORDER,
+                            summary = "Order",
+                            description = "Order"
+                    )
+            ))
+    public OrderDTO getOrderById(@PathParam("orderId") int id) {
+        return orderFacade.getOrderById(id);
+    }
 }
