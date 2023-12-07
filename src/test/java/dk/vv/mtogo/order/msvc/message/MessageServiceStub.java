@@ -1,14 +1,13 @@
 package dk.vv.mtogo.order.msvc.message;
 
 import dk.vv.common.data.transfer.objects.order.OrderDTO;
-import io.quarkiverse.rabbitmqclient.RabbitMQClient;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.test.Mock;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @Mock
 @ApplicationScoped
-public class MessageServiceMock implements MessageService {
+public class MessageServiceStub implements MessageService {
 
 
     @Override
