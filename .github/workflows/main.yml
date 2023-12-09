@@ -60,10 +60,10 @@ jobs:
           output_file: settings.xml
 
       # Build the Docker image
-      - name: Build and push docker image
+      - name: Test, Build and push docker image
         shell: bash
         run: |
-          ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DexcludedGroups="db-connected-tests" --settings settings.xml
+          ./mvnw verify -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -DexcludedGroups="db-connected-tests" --settings settings.xml
           
           pushTag=europe-central2-docker.pkg.dev/kube-403208/quarkus/$IMAGE:$GITHUB_SHA
           
