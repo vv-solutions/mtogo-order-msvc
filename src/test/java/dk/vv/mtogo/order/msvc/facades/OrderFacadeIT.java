@@ -96,4 +96,64 @@ public class OrderFacadeIT {
         Assertions.assertEquals(BigDecimal.valueOf(22).setScale(2),order.getTotal());
     }
 
+  @Test
+  void when_getting_order_metrics_amount_of_total_orders_should_be_10() {
+
+    // Act
+    var metrics = orderFacade.getOrderMetrics();
+
+    // Assert
+    Assertions.assertEquals(10, metrics.getTotalCount());
+  }
+
+    @Test
+    void when_getting_order_metrics_amount_of_received_orders_should_be_10() {
+
+        // Act
+        var metrics = orderFacade.getOrderMetrics();
+
+        // Assert
+        Assertions.assertEquals(10, metrics.getReceivedCount());
+    }
+
+    @Test
+    void when_getting_product_metrics_product_301_should_have_2_count() {
+
+        // Act
+        var metrics = orderFacade.getProductMetrics();
+
+        // Assert
+        Assertions.assertEquals(2, metrics.get(301));
+    }
+
+    @Test
+    void when_getting_supplier_metrics_supplier_201_should_have_1_orders() {
+
+        // Act
+        var metrics = orderFacade.getSupplierMetrics();
+
+        // Assert
+        Assertions.assertEquals(1, metrics.get(201));
+    }
+
+    @Test
+    void when_getting_all_prices_then_list_should_be_10() {
+
+        // Act
+        var metrics = orderFacade.getOrderPrices();
+
+        // Assert
+        Assertions.assertEquals(10, metrics.size());
+    }
+
+
+  @Test
+    void when_getting_customer_metrics_customer_101_should_have_1_order(){
+        // Act
+      var metrics = orderFacade.getCustomerMetrics();
+
+        // Assert
+      Assertions.assertEquals(1, metrics.get(101));
+  }
+
 }
