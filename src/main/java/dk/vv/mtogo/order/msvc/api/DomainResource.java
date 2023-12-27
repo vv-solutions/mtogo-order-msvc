@@ -95,31 +95,7 @@ public class DomainResource {
         OrderDTO createdOrder = orderFacade.createNewOrderWithPrices(orderDTO,products);
 
         // send message on order creation exchange
-        messageService.sendOrderCreationMessage(orderDTO);
-
-//        orderRepository.persist(order);
-
-        // calculate prices 1.
-        // save in db status -- received
-
-        // send on order create queue
-
-
-        // order creation mediator:
-
-            // send notification -- queue -- order received 1.
-
-            // inform restaurant -- queue
-            // wait for response from restaurant
-
-        // if ack:
-            // inform delivery
-            // inform order -- status accepted --> send fee on queue
-            // send notification -- queue -- order accepted
-
-        // if nack
-            // inform order -- status denied
-            // send noti -- order denied
+        messageService.sendOrderCreationMessage(createdOrder);
 
         return createdOrder;
     }
