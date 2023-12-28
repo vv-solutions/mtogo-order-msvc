@@ -1,4 +1,6 @@
 quarkus:
+  http:
+#    port: 8082
   smallrye-openapi:
     info-title: order-svc
     auto-add-security-requirement: false
@@ -42,7 +44,7 @@ order:
 "%dev":
   quarkus:
     http:
-      port: 8081
+      port: 8082
     log:
       level: INFO
       category:

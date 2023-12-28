@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "dk.vv.mtogo.order.msvc.grpc";
+option java_outer_classname = "OrderGrpcProto";
+
+package order;
+
+service OrderGrpc {
+  rpc GetOrderMetrics(Empty) returns (OrderMetrics);
+  rpc GetOrderPrices(Empty) returns (OrderPrices);
+  rpc GetProductInformation(Empty) returns (ProductInformationCollection);
+  rpc GetSupplierInformation(Empty) returns (SupplierInformationCollection);
+  rpc GetCustomerInformation (Empty) returns (CustomerInformationCollection);
+}
+
+message Empty {}
+
+message OrderMetrics{
+  int32 totalOrders =1;
+  int32 finishedOrders =2;
+  int32 receivedOrders =3;
+  int32 acceptedOrders =4;
+  int32 deniedOrders =5;
+  int32 errorOrders =6;
+}
+
+
+message ProductInformation{
+  int32 productId = 1;
+  int32 purchaseCount = 2;
+}
+
+message ProductInformationCollection {
+  repeated ProductInformation productInformation = 1;
+}
+
+
+message OrderPrices{
+  repeated double orderTotalPrice = 1;
+}
+
+message SupplierInformation{
+  int32 supplierId = 1;
+  int32 orderCount = 2;
+}
+
+message SupplierInformationCollection {
+  repeated SupplierInformation supplierInformation = 1;
+}
+
+message CustomerInformation{
+  int32 customerId = 1;
+  int32 orderCount = 2;
+}
+
+message CustomerInformationCollection {
+  repeated CustomerInformation customerInformation = 1;
+}

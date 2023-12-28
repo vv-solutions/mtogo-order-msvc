@@ -7,6 +7,10 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
+    - name: grpc
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
     - name: http
       port: 8080
       targetPort: 8080
@@ -41,13 +45,17 @@ spec:
             - name: MTOGO_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-product-svc
-                  key: password
+                  name: mtogo-db
+                  key: MTOGO_ORDER_DB_PASSWORD
             - name: MTOGO_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: db-product-svc
-                  key: username
+                  name: mtogo-db
+                  key: MTOGO_ORDER_DB_USERNAME
           envFrom:
             - configMapRef:
                 name: mtogo-db-jdbc
+            - configMapRef:
+                name: mtogo-service
+            - secretRef:
+                name: mtogo-rabbit
