@@ -13,3 +13,8 @@ You can run your application in dev mode that enables live coding using:
 
 ### About
 This service handles creation of new orders, as well as the status of all orders. 
+
+
+
+
+![hexagonal-architecture.png](images%2Fhexagonal-architecture.png)
